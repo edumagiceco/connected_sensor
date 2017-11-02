@@ -13,8 +13,8 @@ RunningMedian pm10s = RunningMedian(19);
 
 const int INTERVAL = 60000;
 String MYAPIKEY = "MVBATSXOGBR62YZX";
-char* ssid = "cookie"; //"Seoul IOT_2(2.4G)";
-char* password = "0317137263"; //"12345678";
+char* ssid = "cookie"; //"wifi ap ssid"
+char* password = "0317137263"; //wifi password
 const int RATIO = 10;
 
 void setup() {
@@ -38,7 +38,7 @@ void got_dust(int pm25, int pm10) {
 }
 
 void do_interval() {
-  do_thingspeak(MYAPIKEY, int(pm25s.getMedian()), int(pm10s.getMedian()));
+  do_server(MYAPIKEY, int(pm25s.getMedian()), int(pm10s.getMedian()),get_temperature());
 }
 
 unsigned long mark = 0;
