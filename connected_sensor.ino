@@ -1,5 +1,5 @@
 //
-//    FILE: connected_sensor.ino
+//  FILE: connected_sensor.ino
 //  AUTHOR: Kyuho Kim (ekyuho@gmail.com)
 // CREATED: September 4, 2017
 // Released to the public domain
@@ -12,18 +12,18 @@ RunningMedian pm25s = RunningMedian(19);
 RunningMedian pm10s = RunningMedian(19);
 
 const int INTERVAL = 60000;
-String MYAPIKEY = "MVBATSXOGBR62YZX";
-char* ssid = "cookie"; //"wifi ap ssid"
-char* password = "0317137263"; //wifi password
+String MYAPIKEY = ""; // API KEY
+char* ssid = "";      // WIFI AP SSID
+char* password = "";  // WIFI AP PASSWORD
 const int RATIO = 10;
 
 void setup() {
-  Serial.begin(74880);
+  Serial.begin(9600);
   dust.begin(9600);
   setup_oled();
   connect_ap(ssid, password);
 
-  Serial.println("\nDust Sensor Box V1.0, 2017/9/4 Kyuho Kim");
+  Serial.println("\nDust Sensor Box V1.0, 2017/11/2 MAGICECO");
 }
 
 void got_dust(int pm25, int pm10) {
