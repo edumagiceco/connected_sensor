@@ -5,7 +5,7 @@
 // Released to the public domain
 //
 #include <SoftwareSerial.h>
-SoftwareSerial dust(D1, D7, false, 256);
+SoftwareSerial dust(D1, D0, false, 256);
 
 #include "RunningMedian.h"
 RunningMedian pm25s = RunningMedian(19);
@@ -16,12 +16,14 @@ String MYAPIKEY = ""; // API KEY
 char* ssid = "";      // WIFI AP SSID
 char* password = "";  // WIFI AP PASSWORD
 const int RATIO = 10;
+boolean wifi_ready;
 
 void setup() {
   Serial.begin(9600);
   dust.begin(9600);
   setup_oled();
-  connect_ap(ssid, password);
+  wifi_ready = connect_ap(ssid, password);
+  if (!wifi_ready) nowifi_oled();
 
   Serial.println("\nDust Sensor Box V1.0, 2017/11/2 MAGICECO");
 }
@@ -38,7 +40,7 @@ void got_dust(int pm25, int pm10) {
 }
 
 void do_interval() {
-  do_server(MYAPIKEY, int(pm25s.getMedian()), int(pm10s.getMedian()),get_temperature());
+  if (wifi_ready) do_server(MYAPIKEY, int(pm25s.getMedian()), int(pm10s.getMedian()),get_temperature());
 }
 
 unsigned long mark = 0;
